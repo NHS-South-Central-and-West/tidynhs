@@ -1,8 +1,99 @@
+#' Transform Dates to Quarters
+#'
+#' Given a date, this will return the NHS financial year, quarter, or financial year and quarter
+#'
+#' @param date This parameter is the date to be transformed. This must be a date object otherwise
+#' the function will return an error. The function will not accept a vector of dates. For use with
+#' dplyr syntax, the code will need to be written along the lines of
+#' data%>%mutate(Quarter= vapply(date,date_to_qtr,"Q")).
+#' @param type The default values "FYQ" returns the financial year and quarter
+#' in the format YYYY/YY QX. This parameter also provides additional options in how
+#' the output is returned.
+#'
+#' If this is specified as "Q": only the quarter is returned in the format "QX"
+#' If this is specified as "FY": only the financial year is returned in the format "YYYY/YY".
+#'
+#' @return A character string returning the financial year and/or quarter
+#' @export
+#'@seealso [qtr_to_date()] for financial Year and quarter to date conversion
+#' @examples
+#' date_to_qtr(as.Date("2022-04-01", format = "%Y-%m-%d"))
+#' date_to_qtr(as.Date("2022-04-01", format = "%Y-%m-%d"), type = "Q")
+#' date_to_qtr(as.Date("2022-04-01", format = "%Y-%m-%d"), type = "FY")
+#' date_to_qtr(as.Date("04-01-2022", format = "%d-%m-%Y"), type = "FYQ")
+date_to_qtr <- function(date, type = "FYQ") {
+  if (!inherits(date, "Date")) {
+    stop("Please check data type of parameter 'date' is date.")
+  }
+  if (type != "FYQ" & type != "Q" & type != "FY") {
+    stop("Please check parameter 'type' is within accepted values")
+  }
+
+  x <- date
+  xadj <- seq(lubridate::floor_date(x, "month"), length = 2, by = "-3 months")[2]
+
+
+  if (lubridate::month(x) >= 4) {
+    if (type == "Q") {
+      return(substr(zoo::as.yearqtr(xadj, format = "%Y-%m-%d"), 6, 7))
+    }
+    if (type == "FY") {
+      return(paste0(
+        substr(as.character(lubridate::year(x)), 1, 4), "/",
+        as.character(as.numeric(
+          substr(as.character(lubridate::year(x)), 3, 4)
+        ) + 1)
+      ))
+    }
+
+    if (type == "FYQ") {
+      return(
+        paste0(
+          substr(as.character(lubridate::year(x)), 1, 4), "/",
+          as.character(as.numeric(
+            substr(as.character(lubridate::year(x)), 3, 4)
+          ) + 1),
+          " ", substr(zoo::as.yearqtr(xadj, format = "%Y-%m-%d"), 6, 7)
+        )
+      )
+    }
+  } else {
+    if (lubridate::month(x) < 4) {
+      if (type == "Q") {
+        return(substr(zoo::as.yearqtr(xadj, format = "%Y-%m-%d"), 6, 7))
+      }
+      if (type == "FY") {
+        return(paste0(
+          substr(as.character(lubridate::year(xadj)), 1, 4), "/",
+          as.character(as.numeric(
+            substr(as.character(lubridate::year(xadj)), 3, 4)
+          ) + 1)
+        ))
+      }
+      if (type == "FYQ") {
+        return(
+          paste0(
+            substr(as.character(lubridate::year(xadj)), 1, 4), "/",
+            as.character(as.numeric(
+              substr(as.character(lubridate::year(xadj)), 3, 4)
+            ) + 1),
+            " ", substr(zoo::as.yearqtr(xadj, format = "%Y-%m-%d"), 6, 7)
+          )
+        )
+      }
+    }
+  }
+}
+
+
 #' Transform Quarters to Dates
 #'
+#'@description
 #' Given text in one of the following formats this should return the start date corresponding to this quarter:
+#'
 #' 1. Financial Year, followed by financial quarter i.e 2022/23 Qtr 3 separated by a word (i.e quarter) less than or equal to 7 letters long.
 #' Additionally, the delimiter between financial years must be / or -.
+#'
 #' 2. Quarter, followed by financial year, separated by a space i.e Q3 22/23, where the quarter starts with a word (i.e quarter)
 #' less than or equal to 7 letters long, followed by the quarter number with no space in between.
 #' Additionally, the delimiter between financial years must be / or -.
@@ -15,9 +106,9 @@
 #' which specify the financial year before the quarter. If, instead, the quarter is specified first, this
 #' should set to FALSE.
 #'
-#' @return
+#' @return A date value or vector returning the start date of the input financial year and quarter
 #' @export
-#'
+#'@seealso [date_to_qtr()] for date to Financial year and/or Quarter conversion
 #' @examples
 #'
 #' colyf <- c(

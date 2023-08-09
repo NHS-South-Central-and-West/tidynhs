@@ -2,5 +2,5 @@
 
 export(date_to_qtr)
 export(generate_age_bands)
-export(order_age_groups)
+export(order_age_bands)
 export(qtr_to_date)
