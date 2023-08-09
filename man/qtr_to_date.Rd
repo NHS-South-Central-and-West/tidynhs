@@ -2,33 +2,39 @@
 % Please edit documentation in R/qtr_to_date.R
 \name{qtr_to_date}
 \alias{qtr_to_date}
-\title{qtr_to_date}
+\title{Transform Quarters to Dates}
 \usage{
 qtr_to_date(col, Year_first = T)
 }
 \arguments{
-\item{col}{vector to transform}
+\item{col}{Vector to transform. The vector values should be a character string containing both the Quarter
+and financial year in the format specified in the description. If a vector value is not in a format  accepted by the function
+a NA will be return with a corresponding warning message.}
 
-\item{Year_first}{True false flag based on formatting of text. If year appears first
-in string; set Year_first=T, if quarter appears first set Year_first=F}
+\item{Year_first}{The default value of TRUE assumes that the parameter col contains character values
+which specify the financial year before the quarter. If, instead, the quarter is specified first, this
+should set to FALSE.}
 }
 \description{
 Given text in one of the following formats this should return the start date corresponding to this quarter:
 \enumerate{
 \item Financial Year, followed by financial quarter i.e 2022/23 Qtr 3 separated by a word (i.e quarter) less than or equal to 7 letters long.
-Additionally, the delimiter between financial years must be / or -
+Additionally, the delimiter between financial years must be / or -.
 \item Quarter, followed by financial year, separated by a space i.e Q3 22/23, where the quarter starts with a word (i.e quarter)
 less than or equal to 7 letters long, followed by the quarter number with no space in between.
-Additionally, the delimiter between financial years must be / or -
+Additionally, the delimiter between financial years must be / or -.
 }
 }
 \examples{
 
-colyf<-c("22/23 Qtr1", "2022/2023 Quarter01",
-         " 2022/23 Qtr4","2022/23 Q1", "22/23 QTR 3")
-qtr_to_date(colyf,Year_first = T)
-colqf<-c("Q322/23", "Q3 22/23","Q3 2022/2023","q3 22/23"
-         ,"Quarter3 2022/23"
+colyf <- c(
+  "22/23 Qtr1", "2022/2023 Quarter01",
+  " 2022/23 Qtr4", "2022/23 Q1", "22/23 QTR 3"
 )
-qtr_to_date(colqf,Year_first = F)
+qtr_to_date(colyf, Year_first = T)
+colqf <- c(
+  "Q322/23", "Q3 22/23", "Q3 2022/2023", "q3 22/23",
+  "Quarter3 2022/23"
+)
+qtr_to_date(colqf, Year_first = F)
 }

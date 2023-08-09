@@ -2,24 +2,29 @@
 % Please edit documentation in R/date_to_qtr.R
 \name{date_to_qtr}
 \alias{date_to_qtr}
-\title{date_to_qtr}
+\title{Transform Dates to Quarters}
 \usage{
 date_to_qtr(date, type = "FYQ")
 }
 \arguments{
-\item{type}{one of 3 options:
+\item{date}{This parameter is the date to be transformed. This must be a date object otherwise
+the function will return an error. The function will not accept a vector of dates. For use with
+dplyr syntax, the code will need to be written along the lines of
+data\%>\%mutate(Quarter= vapply(date,date_to_qtr,"Q")).}
 
-"FYQ" returns the financial year and quarter
-"Q" returns the quarter only
-"FY" returns the financial year only}
+\item{type}{The default values "FYQ" returns the financial year and quarter
+in the format YYYY/YY QX. This parameter also provides additional options in how
+the output is returned.
+
+If this is specified as "Q": only the quarter is returned in the format "QX"
+If this is specified as "FY": only the financial year is returned in the format "YYYY/YY".}
 }
 \description{
-given a date, this should return the NHS financial year, quarter, or financial year and quarter
+Given a date, this will return the NHS financial year, quarter, or financial year and quarter
 }
 \examples{
-date_to_qtr(as.Date('2022-04-01' ,format = "\%Y-\%m-\%d"))
-date_to_qtr(as.Date('2022-04-01' ,format = "\%Y-\%m-\%d"), type="Q")
-date_to_qtr(as.Date('2022-04-01' ,format = "\%Y-\%m-\%d"), type="FY")
-date_to_qtr(as.Date('04-01-2022' ,format = "\%d-\%m-\%Y"),type="FYQ")
-date_to_qtr(as.Date('04-01-2022' ,format = "\%d-\%m-\%Y"),type="FYQ2")
+date_to_qtr(as.Date("2022-04-01", format = "\%Y-\%m-\%d"))
+date_to_qtr(as.Date("2022-04-01", format = "\%Y-\%m-\%d"), type = "Q")
+date_to_qtr(as.Date("2022-04-01", format = "\%Y-\%m-\%d"), type = "FY")
+date_to_qtr(as.Date("04-01-2022", format = "\%d-\%m-\%Y"), type = "FYQ")
 }
