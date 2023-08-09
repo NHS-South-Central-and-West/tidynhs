@@ -13,10 +13,11 @@ generate_age_bands(col = "Age", age_bands = NULL, common_age_bands = 999)
 order of the vector specifies the order with which the age_band appears within the returned dplyr::case_when statement.
 
 This parameter can be left blank if common_age_bands has been specified as 1,2 or 3.
-In these cases the age bands corresponding to these values (as specified in common_age_bands parameter) will be used.}
+In these cases the age bands corresponding to these values (as specified in the common_age_bands parameter) will be used.
+If common_age_bands is specified as 1,2 or 3 and age_bands is also specified, the values from common_age_bands will be used.}
 
 \item{common_age_bands}{When this is null or outside the specified values below, the function
-will return dplyr code corresponding to the age bands specified in the parameter age_bands
+will return dplyr code corresponding to the age bands specified in the parameter age_bands.
 If, instead, a numeric value 1,2 or 3 is inputted for this parameter, the following age bands below will be used instead:
 
 1 = c("0-4","5-9","10-14","15-19","20-24","25-29","30-34","35-39","40-44","45-49",
@@ -28,7 +29,7 @@ If, instead, a numeric value 1,2 or 3 is inputted for this parameter, the follow
 3 = c("0-9","10-19","20-29","30-39","40-49","50-59","60-69","70-79","80-89","90-99","100+").}
 }
 \value{
-A statement printed in the console, giving the suggested dplyr code to create age bands from a
+A statement printed in the console, giving the suggested dplyr code to create age bands from an
 age column
 }
 \description{

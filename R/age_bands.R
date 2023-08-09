@@ -8,9 +8,10 @@
 #' order of the vector specifies the order with which the age_band appears within the returned dplyr::case_when statement.
 #'
 #' This parameter can be left blank if common_age_bands has been specified as 1,2 or 3.
-#' In these cases the age bands corresponding to these values (as specified in common_age_bands parameter) will be used.
+#' In these cases the age bands corresponding to these values (as specified in the common_age_bands parameter) will be used.
+#' If common_age_bands is specified as 1,2 or 3 and age_bands is also specified, the values from common_age_bands will be used.
 #' @param common_age_bands When this is null or outside the specified values below, the function
-#'  will return dplyr code corresponding to the age bands specified in the parameter age_bands
+#'  will return dplyr code corresponding to the age bands specified in the parameter age_bands.
 #'  If, instead, a numeric value 1,2 or 3 is inputted for this parameter, the following age bands below will be used instead:
 #'
 #' 1 = c("0-4","5-9","10-14","15-19","20-24","25-29","30-34","35-39","40-44","45-49",
@@ -21,7 +22,7 @@
 #'
 #' 3 = c("0-9","10-19","20-29","30-39","40-49","50-59","60-69","70-79","80-89","90-99","100+").
 #'
-#' @return A statement printed in the console, giving the suggested dplyr code to create age bands from a
+#' @return A statement printed in the console, giving the suggested dplyr code to create age bands from an
 #' age column
 #' @export
 #'@seealso [order_age_bands()] for suggesting code to order age bands
@@ -100,7 +101,7 @@ generate_age_bands <- function(col = "Age", age_bands = NULL, common_age_bands =
   string <- paste0("mutate( \n", "age_group = dplyr::case_when( \n")
 
 
-  for (i in (1:length(age_bands))) {
+  for (i in seq_along(age_bands)) {
     if (length(as.vector(age_bands_formatted[[i]])) == 1 & i == 1) {
       string <- paste0(string, paste0(col, "<", as.numeric(age_bands_formatted[[i]]), "   ~", "'", age_bands[i]), "' ,", "\n")
     }
@@ -129,14 +130,14 @@ generate_age_bands <- function(col = "Age", age_bands = NULL, common_age_bands =
 #' and therefore code generated should be reviewed and modified as necessary.
 #'
 #' The function will output an vector containing the sugggested ordering, and also
-#' print out the code needed to create this vector if this needs modifiying.
+#' print out the code needed to create this vector, to support any modification required.
 #'
 #' The function is intended for use in creating visualisations ordered by age groups.
 #'
 #' @param y This parameter should be a vector or data frame column of age bands.
 #'
 #'
-#' @return A vector of the age band values reordered
+#' @return A vector of the unique age band values reordered
 #' @export
 #'@seealso [generate_age_bands()] for suggesting code to create age bands from an age vector
 #' @examples
@@ -226,7 +227,7 @@ generate_age_bands <- function(col = "Age", age_bands = NULL, common_age_bands =
 #'
 #' order_age_bands(data3$age_group)
 #'
-#' data3$age_group <- factor(x = data3$age_group, levels = order_age_groups(data3$age_group), ordered = T)
+#' data3$age_group <- factor(x = data3$age_group, levels = order_age_bands(data3$age_group), ordered = T)
 # '
 # '
 #' ggplot2::ggplot(data3, ggplot2::aes(x = age_group)) +

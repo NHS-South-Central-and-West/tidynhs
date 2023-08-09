@@ -7,16 +7,16 @@
 qtr_to_date(col, Year_first = T)
 }
 \arguments{
-\item{col}{Vector to transform. The vector values should be a character string containing both the Quarter
-and financial year in the format specified in the description. If a vector value is not in a format  accepted by the function
-a NA will be return with a corresponding warning message.}
+\item{col}{Vector to transform. The vector values should be a character string containing both the quarter
+and financial year in the format specified in the description. If a vector value is not in a format  accepted by the function,
+a NA will be returned with a corresponding warning message.}
 
 \item{Year_first}{The default value of TRUE assumes that the parameter col contains character values
 which specify the financial year before the quarter. If, instead, the quarter is specified first, this
 should set to FALSE.}
 }
 \value{
-A date value or vector returning the start date of the input financial year and quarter
+A date value or vector returning the start date of the input financial year and quarter.
 }
 \description{
 Given text in one of the following formats this should return the start date corresponding to this quarter:
@@ -42,5 +42,5 @@ colqf <- c(
 qtr_to_date(colqf, Year_first = F)
 }
 \seealso{
-\code{\link[=date_to_qtr]{date_to_qtr()}} for date to Financial year and/or Quarter conversion
+\code{\link[=date_to_qtr]{date_to_qtr()}} for date to financial year and/or quarter conversion.
 }

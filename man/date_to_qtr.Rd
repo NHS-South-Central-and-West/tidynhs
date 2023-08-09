@@ -12,15 +12,15 @@ the function will return an error. The function will not accept a vector of date
 dplyr syntax, the code will need to be written along the lines of
 data\%>\%mutate(Quarter= vapply(date,date_to_qtr,"Q")).}
 
-\item{type}{The default values "FYQ" returns the financial year and quarter
+\item{type}{The default value "FYQ" returns the financial year and quarter
 in the format YYYY/YY QX. This parameter also provides additional options in how
 the output is returned.
 
-If this is specified as "Q": only the quarter is returned in the format "QX"
+If this is specified as "Q": only the quarter is returned in the format "QX".
 If this is specified as "FY": only the financial year is returned in the format "YYYY/YY".}
 }
 \value{
-A character string returning the financial year and/or quarter
+A character string of the financial year and/or quarter based on the date provided.
 }
 \description{
 Given a date, this will return the NHS financial year, quarter, or financial year and quarter
@@ -32,5 +32,5 @@ date_to_qtr(as.Date("2022-04-01", format = "\%Y-\%m-\%d"), type = "FY")
 date_to_qtr(as.Date("04-01-2022", format = "\%d-\%m-\%Y"), type = "FYQ")
 }
 \seealso{
-\code{\link[=qtr_to_date]{qtr_to_date()}} for financial Year and quarter to date conversion
+\code{\link[=qtr_to_date]{qtr_to_date()}} for financial year and quarter to date conversion.
 }

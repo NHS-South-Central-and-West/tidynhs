@@ -10,14 +10,14 @@ order_age_bands(y)
 \item{y}{This parameter should be a vector or data frame column of age bands.}
 }
 \value{
-A vector of the age band values reordered
+A vector of the unique age band values reordered
 }
 \description{
 Returns a suggested ordering of age bands. This is intended to serve as a guide only
 and therefore code generated should be reviewed and modified as necessary.
 
 The function will output an vector containing the sugggested ordering, and also
-print out the code needed to create this vector if this needs modifiying.
+print out the code needed to create this vector, to support any modification required.
 
 The function is intended for use in creating visualisations ordered by age groups.
 }
@@ -108,7 +108,7 @@ data3 <- data.frame(
 
 order_age_bands(data3$age_group)
 
-data3$age_group <- factor(x = data3$age_group, levels = order_age_groups(data3$age_group), ordered = T)
+data3$age_group <- factor(x = data3$age_group, levels = order_age_bands(data3$age_group), ordered = T)
 ggplot2::ggplot(data3, ggplot2::aes(x = age_group)) +
   ggplot2::geom_bar(stat = "count")
 }

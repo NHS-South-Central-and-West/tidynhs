@@ -6,16 +6,16 @@
 #' the function will return an error. The function will not accept a vector of dates. For use with
 #' dplyr syntax, the code will need to be written along the lines of
 #' data%>%mutate(Quarter= vapply(date,date_to_qtr,"Q")).
-#' @param type The default values "FYQ" returns the financial year and quarter
+#' @param type The default value "FYQ" returns the financial year and quarter
 #' in the format YYYY/YY QX. This parameter also provides additional options in how
 #' the output is returned.
 #'
-#' If this is specified as "Q": only the quarter is returned in the format "QX"
+#' If this is specified as "Q": only the quarter is returned in the format "QX".
 #' If this is specified as "FY": only the financial year is returned in the format "YYYY/YY".
 #'
-#' @return A character string returning the financial year and/or quarter
+#' @return A character string of the financial year and/or quarter based on the date provided.
 #' @export
-#'@seealso [qtr_to_date()] for financial Year and quarter to date conversion
+#'@seealso [qtr_to_date()] for financial year and quarter to date conversion.
 #' @examples
 #' date_to_qtr(as.Date("2022-04-01", format = "%Y-%m-%d"))
 #' date_to_qtr(as.Date("2022-04-01", format = "%Y-%m-%d"), type = "Q")
@@ -99,16 +99,16 @@ date_to_qtr <- function(date, type = "FYQ") {
 #' Additionally, the delimiter between financial years must be / or -.
 #'
 #'
-#' @param col Vector to transform. The vector values should be a character string containing both the Quarter
-#' and financial year in the format specified in the description. If a vector value is not in a format  accepted by the function
-#' a NA will be return with a corresponding warning message.
+#' @param col Vector to transform. The vector values should be a character string containing both the quarter
+#' and financial year in the format specified in the description. If a vector value is not in a format  accepted by the function,
+#' a NA will be returned with a corresponding warning message.
 #' @param Year_first The default value of TRUE assumes that the parameter col contains character values
 #' which specify the financial year before the quarter. If, instead, the quarter is specified first, this
 #' should set to FALSE.
 #'
-#' @return A date value or vector returning the start date of the input financial year and quarter
+#' @return A date value or vector returning the start date of the input financial year and quarter.
 #' @export
-#'@seealso [date_to_qtr()] for date to Financial year and/or Quarter conversion
+#'@seealso [date_to_qtr()] for date to financial year and/or quarter conversion.
 #' @examples
 #'
 #' colyf <- c(
