@@ -1,12 +1,12 @@
 # generate_age_bands
 
 test_that("errors", {
-  # Does date time work
+  # Do strings with no digits work
   expect_error(generate_age_bands(age_bands = "less than five"))
 })
 
 test_that("no errors", {
-  # Does a null age_bands work if common_age_bands is populated correctly
+  # Does a null age_bands parameter work if common_age_bands is populated correctly
   expect_no_error(
     generate_age_bands(
       common_age_bands = 1
